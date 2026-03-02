@@ -1,31 +1,527 @@
-html,
-body {
-    background-color: lightblue;
-    font-family: Arial, sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap');
+
+/* ============================================
+   CSS Variables
+   ============================================ */
+:root {
+    /* Colors */
+    --color-bg: lightblue;
+    --color-surface: #ffffff;
+    --color-surface-alt: #f0f8ff;
+    /* alice blue - complements lightblue */
+    --color-primary: #333;
+    --color-accent: #0066cc;
+    --color-accent-dark: #004fa3;
+    --color-text: #333;
+    --color-text-muted: #555;
+    --color-text-light: #777;
+    --color-nav-bg: #f2f2f2;
+    --color-nav-text: #333;
+    --color-nav-hover-bg: #e0e0e0;
+    --color-border: #d0d0d0;
+    --color-footer-bg: #2a2a2a;
+    --color-footer-text: #cccccc;
+
+    /* Typography */
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'Source Sans 3', Arial, sans-serif;
+
+    /* Spacing & Layout */
+    --radius-sm: 4px;
+    --radius: 8px;
+    --radius-lg: 14px;
+    --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.08);
+    --shadow: 0 2px 12px rgba(0, 0, 0, 0.10);
+    --shadow-lg: 0 6px 24px rgba(0, 0, 0, 0.14);
+    --max-w: 1100px;
+    --nav-h: 66px;
+
+    /* Transitions */
+    --transition: 0.2s ease;
+}
+
+/* ============================================
+   Reset & Base
+   ============================================ */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
     margin: 0;
-    padding: 20px;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
 }
 
 body {
-    nav {
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
+    background-color: var(--color-bg);
+    font-family: var(--font-body);
+    color: var(--color-text);
+    line-height: 1.7;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
 
-        li {
-            display: inline;
-            margin-right: 15px;
-        }
+/* ============================================
+   Typography
+   ============================================ */
+h1,
+h2,
+h3,
+h4 {
+    font-family: var(--font-display);
+    color: var(--color-primary);
+    line-height: 1.25;
+}
 
-        a {
-            text-decoration: none;
-            color: #333;
-            font-weight: bold;
+h1 {
+    font-size: clamp(1.9rem, 5vw, 3rem);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    position: relative;
+    padding-bottom: 0.75rem;
+}
 
-            &:hover {
-                color: #0066cc;
-            }
-        }
+/* Decorative underline on h1 */
+h1::after {
+    content: '';
+    display: block;
+    width: 56px;
+    height: 4px;
+    background: var(--color-accent);
+    border-radius: 2px;
+    margin-top: 0.6rem;
+}
+
+h2 {
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    margin-top: 2rem;
+    color: var(--color-primary);
+}
+
+h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+p {
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+    margin-bottom: 1rem;
+    max-width: 70ch;
+}
+
+a {
+    color: var(--color-accent);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color var(--transition);
+}
+
+a:hover,
+a:focus {
+    color: var(--color-accent-dark);
+    text-decoration: underline;
+}
+
+a:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+}
+
+/* ============================================
+   Header & Navigation
+   ============================================ */
+header {
+    background-color: var(--color-nav-bg);
+    height: var(--nav-h);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+}
+
+header nav {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 2rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Optional: site name/logo on the left */
+header nav::before {
+    content: '🤝 ServeConnect';
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    color: orangered;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 0.2rem;
+    align-items: center;
+}
+
+header nav li {
+    display: inline;
+}
+
+header nav a {
+    color: var(--color-nav-text);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    transition: background var(--transition), color var(--transition);
+    display: inline-block;
+}
+
+header nav a:hover,
+header nav a:focus {
+    background-color: var(--color-nav-hover-bg);
+    color: var(--color-accent);
+    text-decoration: none;
+}
+
+header nav a.active {
+    background-color: var(--color-accent);
+    color: #ffffff;
+}
+
+/* ============================================
+   Main Content
+   ============================================ */
+main {
+    flex: 1;
+    max-width: var(--max-w);
+    width: 100%;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+    animation: fadeUp 0.35s ease both;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Page intro area */
+.page-intro {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+/* ============================================
+   Cards & Surfaces
+   ============================================ */
+.card {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    padding: 1.5rem 1.75rem;
+    transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* ============================================
+   Lists
+   ============================================ */
+main ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;
+}
+
+main ul li {
+    background: var(--color-surface);
+    border-left: 4px solid var(--color-accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 0.9rem 1.4rem;
+    margin-bottom: 0.65rem;
+    box-shadow: var(--shadow-sm);
+    font-size: 1.05rem;
+    color: var(--color-text);
+    transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    position: relative;
+}
+
+main ul li:hover {
+    transform: translateX(5px);
+    box-shadow: var(--shadow);
+    border-color: var(--color-accent-dark);
+}
+
+/* Category list — pill style */
+.category-list li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-surface-alt);
+    border: 1px solid var(--color-border);
+    border-left: 4px solid var(--color-accent);
+    border-radius: 0 30px 30px 0;
+    padding: 0.6rem 1.25rem 0.6rem 1rem;
+    margin: 0.35rem 0;
+}
+
+/* ============================================
+   Organization Grid / Images
+   ============================================ */
+.org-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.org-card {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.org-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.org-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+}
+
+.org-card-body {
+    padding: 1rem 1.25rem 1.25rem;
+}
+
+.org-card-body h3 {
+    margin-bottom: 0.4rem;
+    color: var(--color-primary);
+}
+
+.org-card-body p {
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    display: block;
+}
+
+/* ============================================
+   Badges & Tags
+   ============================================ */
+.badge {
+    display: inline-block;
+    background: var(--color-accent);
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 30px;
+}
+
+/* ============================================
+   Buttons
+   ============================================ */
+.btn {
+    display: inline-block;
+    background: var(--color-accent);
+    color: #ffffff;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 0.6rem 1.4rem;
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background var(--transition), transform var(--transition);
+}
+
+.btn:hover,
+.btn:focus {
+    background: var(--color-accent-dark);
+    color: #ffffff;
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--color-accent);
+    border: 2px solid var(--color-accent);
+}
+
+.btn-outline:hover {
+    background: var(--color-accent);
+    color: #ffffff;
+}
+
+/* ============================================
+   Footer
+   ============================================ */
+footer {
+    background-color: var(--color-nav-bg);
+    color: var(--color-footer-text);
+    text-align: center;
+    padding: 1.5rem 2rem;
+    font-size: 0.9rem;
+    font-family: var(--font-body);
+    letter-spacing: 0.02em;
+    border-top: 3px solid var(--color-accent);
+}
+
+
+
+
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+.text-muted {
+    color: var(--color-text-muted);
+}
+
+.text-accent {
+    color: var(--color-accent);
+}
+
+.mt-1 {
+    margin-top: 0.5rem;
+}
+
+.mt-2 {
+    margin-top: 1rem;
+}
+
+.mt-3 {
+    margin-top: 1.5rem;
+}
+
+.mb-1 {
+    margin-bottom: 0.5rem;
+}
+
+.mb-2 {
+    margin-bottom: 1rem;
+}
+
+/* ============================================
+   Responsive — Tablet (max 768px)
+   ============================================ */
+@media (max-width: 768px) {
+    header nav::before {
+        font-size: 1rem;
+    }
+
+    header nav a {
+        font-size: 0.82rem;
+        padding: 0.45rem 0.75rem;
+        letter-spacing: 0.02em;
+    }
+
+    main {
+        padding: 2rem 1.25rem 3.5rem;
+    }
+
+    .org-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
+/* ============================================
+   Responsive — Mobile (max 480px)
+   ============================================ */
+@media (max-width: 480px) {
+    :root {
+        --nav-h: 56px;
+    }
+
+    header nav {
+        padding: 0 1rem;
+    }
+
+    header nav::before {
+        font-size: 0.9rem;
+    }
+
+    header nav a {
+        font-size: 0.75rem;
+        padding: 0.35rem 0.55rem;
+        letter-spacing: 0;
+    }
+
+    main {
+        padding: 1.5rem 1rem 3rem;
+    }
+
+    h1::after {
+        width: 36px;
+    }
+
+    .org-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================
+   Print Styles
+   ============================================ */
+@media print {
+
+    header,
+    footer {
+        display: none;
+    }
+
+    body {
+        background: white;
+        color: black;
+    }
+
+    main {
+        padding: 0;
+        max-width: 100%;
     }
 }
