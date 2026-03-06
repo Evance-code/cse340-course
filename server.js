@@ -30,7 +30,7 @@ app.set('views', path.join(__dirname, 'src/views'));
 /**
  * Routes
  */
-app.get('/', async (req, res) => {
+app.get('/home', async (req, res) => {
     const title = 'Home';
     res.render('home', { title });
 });
