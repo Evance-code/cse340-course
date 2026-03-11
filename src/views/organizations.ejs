@@ -1,10 +1,8 @@
 <%- include('partials/header') %>
-
     <main>
         <h1>
             <%= title %>
         </h1>
-
         <% organizations.forEach(org=> { %>
             <div>
                 <img src="/images/<%= org.logo_filename %>" alt="<%= org.name %> logo">
@@ -20,5 +18,4 @@
             </div>
             <% }) %>
     </main>
-
     <%- include('partials/footer') %>
