@@ -34,6 +34,10 @@ app.set('views', path.join(__dirname, 'src/views'));
 /**
  * Routes
  */
+app.get('/', (req, res) => {
+    res.redirect('/home');
+});
+
 app.get('/home', async (req, res) => {
     const title = 'Home';
     res.render('home', { title });
