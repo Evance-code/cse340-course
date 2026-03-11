@@ -2,6 +2,7 @@ import express from 'express'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { testConnection } from './src/models/db.js'
+import { getAllOrganizations } from './src/models/organizations.js';
 
 // Required for __dirname in ES Modules
 const __filename = fileURLToPath(import.meta.url)
@@ -37,9 +38,13 @@ app.get('/home', async (req, res) => {
 });
 
 app.get('/organizations', async (req, res) => {
+    const organizations = await getAllOrganizations();
+    console.log(organizations);
+
     const title = 'Our Partner Organizations';
     res.render('organizations', { title });
 });
+
 
 app.get('/projects', async (req, res) => {
     const title = 'Service Projects';
