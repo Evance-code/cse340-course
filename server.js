@@ -1,6 +1,7 @@
 import express from 'express'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { testConnection } from './src/models/db.js'
 
 // Required for __dirname in ES Modules
 const __filename = fileURLToPath(import.meta.url)
